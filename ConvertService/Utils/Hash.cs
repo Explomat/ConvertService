@@ -8,9 +8,9 @@ namespace ConvertService.Utils
 {
     public class Hash
     {
-        public static string GetMD5Hash(MD5 md5, Stream stream)
+        public static string GetMD5Hash(MD5 md5, byte[] byteArray)
         {
-            byte[] data = md5.ComputeHash(stream);
+            byte[] data = md5.ComputeHash(byteArray);
 
             StringBuilder sBuilder = new StringBuilder();
 

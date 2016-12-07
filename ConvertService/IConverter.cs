@@ -18,10 +18,10 @@ namespace ConvertService
         ResponseFileInfo ConvertFile(UploadFileInfo request);
     }
 
-    [DataContract(Namespace = "http://service.weblms.ru")]
+    [MessageContract]
     public class DownloadRequest
     {
-        [DataMember]
+        [MessageBodyMember]
         public string Path;
     }
 
@@ -48,25 +48,25 @@ namespace ConvertService
     }
 
 
-    [DataContract(Namespace = "http://service.weblms.ru")]
-    public class RemoteFileInfo : IDisposable
+    [MessageContract]
+    public class RemoteFileInfo// : IDisposable
     {
         //[MessageHeader(MustUnderstand = true)]
         //public string FileName;
 
-        //[MessageHeader(MustUnderstand = true)]
-        //public long Length;
+        [MessageHeader(MustUnderstand = true)]
+        public long Length;
 
-        [DataMember]
+        [MessageBodyMember(Order = 1)]
         public System.IO.Stream FileByteStream;
 
-        public void Dispose()
-        {
-            if (FileByteStream != null)
-            {
-                FileByteStream.Close();
-                FileByteStream = null;
-            }
-        }
+        //public void Dispose()
+        //{
+        //    if (FileByteStream != null)
+        //    {
+        //        FileByteStream.Close();
+        //        FileByteStream = null;
+        //    }
+        //}
     }
 }
