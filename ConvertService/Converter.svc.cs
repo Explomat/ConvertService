@@ -63,41 +63,55 @@ namespace ConvertService
         {
             string hash = "";
             string destDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WRecords");
-            Stream sourceStream = new MemoryStream(request.ByteArray);
-            ResponseFileInfo fileInfo = new ResponseFileInfo();
-            using (MD5 md5 = MD5.Create())
+            Stream sourceStream = null;
+            ResponseFileInfo fileInfo = null;
+            try
             {
-                hash = Hash.GetMD5Hash(md5, request.ByteArray);
-                string destFullDirectory = Path.Combine(destDirectory, request.Email, hash);
-                string videoDirectory = Path.Combine(destFullDirectory, "video");
-
-                if (!Directory.Exists(destDirectory))
+                fileInfo = new ResponseFileInfo();
+                sourceStream = new MemoryStream();
+                sourceStream.Write(request.ByteArray, 0, request.ByteArray.Length);
+                using (MD5 md5 = MD5.Create())
                 {
-                    Directory.CreateDirectory(destDirectory);
+                    hash = Hash.GetMD5Hash(md5, request.ByteArray);
+                    string destFullDirectory = Path.Combine(destDirectory, request.Email, hash);
+                    string videoDirectory = Path.Combine(destFullDirectory, "video");
+
+                    if (!Directory.Exists(destDirectory))
+                    {
+                        Directory.CreateDirectory(destDirectory);
+                    }
+
+                    if (!Directory.Exists(destFullDirectory))
+                    {
+                        Directory.CreateDirectory(destFullDirectory);
+                        Directory.CreateDirectory(videoDirectory);
+                        Zip.Unzip(sourceStream, destFullDirectory);
+                    }
+
+                    VideoConverter converter = new VideoConverter(destFullDirectory, videoDirectory);
+                    string archiveError = converter.CheckArchiveCorrect();
+                    if (archiveError != null)
+                    {
+                        throw new Exception(archiveError);
+                    }
+
+                    string outFilePath = converter.Start();
+                    converter.Dispose();
+                    fileInfo.Path = string.Format("WRecords/{0}/{1}/video/{2}", request.Email, hash, Path.GetFileName(outFilePath));
+                    fileInfo.Hash = hash;
                 }
-
-                if (!Directory.Exists(destFullDirectory))
-                {
-                    Directory.CreateDirectory(destFullDirectory);
-                    Directory.CreateDirectory(videoDirectory);
-                    Zip.Unzip(sourceStream, destFullDirectory);
-
-                }
-
-                VideoConverter converter = new VideoConverter(destFullDirectory, videoDirectory);
-                string archiveError = converter.CheckArchiveCorrect();
-                if (archiveError != null)
-                {
-                    throw new Exception(archiveError);
-                }
-
-                string outFilePath = converter.Start();
-                converter.Dispose();
-                fileInfo.Path = string.Format("WRecords/{0}/{1}/video/{2}", request.Email, hash, Path.GetFileName(outFilePath));
-                fileInfo.Hash = hash;
             }
-
-            sourceStream.Close();
+            catch (Exception e)
+            {
+                File.WriteAllText(Path.Combine(destDirectory, hash + "__catch.txt"), e.Message);
+            }
+            finally
+            {
+                if (sourceStream != null)
+                {
+                    sourceStream.Close();
+                }
+            }
             return fileInfo;
         }
         #endregion
