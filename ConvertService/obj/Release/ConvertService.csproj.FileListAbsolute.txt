@@ -5,3 +5,11 @@ D:\repos\VS2013\Projects\ConvertService\ConvertService\bin\NReco.VideoConverter.
 D:\repos\VS2013\Projects\ConvertService\ConvertService\bin\NReco.VideoConverter.xml
 D:\repos\VS2013\Projects\ConvertService\ConvertService\obj\Release\ConvertService.dll
 D:\repos\VS2013\Projects\ConvertService\ConvertService\obj\Release\ConvertService.pdb
+D:\repos\ConvertService\ConvertService\bin\ConvertService.dll.config
+D:\repos\ConvertService\ConvertService\bin\ConvertService.dll
+D:\repos\ConvertService\ConvertService\bin\ConvertService.pdb
+D:\repos\ConvertService\ConvertService\bin\NReco.VideoConverter.dll
+D:\repos\ConvertService\ConvertService\bin\NReco.VideoConverter.xml
+D:\repos\ConvertService\ConvertService\obj\Release\ConvertService.csprojResolveAssemblyReference.cache
+D:\repos\ConvertService\ConvertService\obj\Release\ConvertService.dll
+D:\repos\ConvertService\ConvertService\obj\Release\ConvertService.pdb

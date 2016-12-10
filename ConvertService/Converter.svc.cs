@@ -87,6 +87,7 @@ namespace ConvertService
                         Directory.CreateDirectory(videoDirectory);
                         Zip.Unzip(sourceStream, destFullDirectory);
                     }
+                    sourceStream.Dispose();
 
                     VideoConverter converter = new VideoConverter(destFullDirectory, videoDirectory);
                     string archiveError = converter.CheckArchiveCorrect();
@@ -103,14 +104,7 @@ namespace ConvertService
             }
             catch (Exception e)
             {
-                File.WriteAllText(Path.Combine(destDirectory, hash + "__catch.txt"), e.Message);
-            }
-            finally
-            {
-                if (sourceStream != null)
-                {
-                    sourceStream.Close();
-                }
+                File.WriteAllText(Path.Combine(destDirectory, hash + "__catch.txt"), e.InnerException.StackTrace);
             }
             return fileInfo;
         }
