@@ -1,4 +1,3 @@
-D:\repos\VS2013\Projects\ConvertService\ConvertService\obj\Debug\ConvertService.csprojResolveAssemblyReference.cache
 D:\repos\VS2013\Projects\ConvertService\ConvertService\bin\ConvertService.dll.config
 D:\repos\VS2013\Projects\ConvertService\ConvertService\bin\ConvertService.dll
 D:\repos\VS2013\Projects\ConvertService\ConvertService\bin\ConvertService.pdb

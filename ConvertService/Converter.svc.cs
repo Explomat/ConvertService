@@ -104,7 +104,7 @@ namespace ConvertService
             }
             catch (Exception e)
             {
-                File.WriteAllText(Path.Combine(destDirectory, hash + "__catch.txt"), e.InnerException.StackTrace);
+                File.WriteAllText(Path.Combine(destDirectory, hash + "__catch.txt"), e.StackTrace);
             }
             return fileInfo;
         }
