@@ -10,10 +10,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/ConvertService.dll">
-      <publishTime>12/12/2016 11:51:31</publishTime>
+      <publishTime>01/10/2017 17:39:34</publishTime>
     </File>
     <File Include="bin/ConvertService.pdb">
-      <publishTime>12/12/2016 11:51:31</publishTime>
+      <publishTime>01/10/2017 17:39:34</publishTime>
     </File>
     <File Include="bin/NReco.VideoConverter.dll">
       <publishTime>12/06/2016 18:13:23</publishTime>
@@ -28,7 +28,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/09/2016 11:41:36</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/14/2016 14:25:30</publishTime>
+      <publishTime>01/10/2017 16:33:51</publishTime>
     </File>
   </ItemGroup>
 </Project>

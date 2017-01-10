@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ConvertService
 {
@@ -14,8 +15,10 @@ namespace ConvertService
         [OperationContract]
         RemoteFileInfo DownloadFile(DownloadRequest request);
 
+        //[OperationContract]
+        //void ConvertFile(UploadFileInfo request);
         [OperationContract]
-        ResponseFileInfo ConvertFile(UploadFileInfo request);
+        Task<ResponseFileInfo> ConvertFile(UploadFileInfo request);
     }
 
     [MessageContract]

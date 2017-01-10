@@ -60,6 +60,14 @@ namespace ConvertService.Utils
             return this.AddAudio();
         }
 
+        public void Stop()
+        {
+            if (this.converter != null)
+            {
+                this.converter.Stop();
+            }
+        }
+
         public Bitmap ReduceBitmap(Bitmap original, Bitmap reduced, int x, int y, bool isVisible, string imageName)
         {
             if (!isVisible)
@@ -359,7 +367,10 @@ namespace ConvertService.Utils
 
         public void Dispose()
         {
-            this.converter = null;
+            if (this.converter != null)
+            {
+                this.converter = null;
+            }
         }
     }
 }
