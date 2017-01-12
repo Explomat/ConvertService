@@ -11,11 +11,11 @@ namespace ConvertService
     [ServiceContract(Namespace = "http://service.weblms.ru")]
     public interface IConverter
     {
-        [OperationContract]
-        RemoteFileInfo DownloadFile(DownloadRequest request);
+        //[OperationContract(IsOneWay=true)]
+        //void DownloadFile(DownloadRequest request);
 
-        [OperationContract]
-        ResponseFileInfo ConvertFile(UploadFileInfo request);
+        [OperationContract(IsOneWay=true)]
+        void ConvertFile(UploadFileInfo request);
     }
 
     [MessageContract]

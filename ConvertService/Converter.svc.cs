@@ -26,40 +26,40 @@ namespace ConvertService
 
         #region File Methods
 
-        public RemoteFileInfo DownloadFile(DownloadRequest request)
-        {
-            RemoteFileInfo result = new RemoteFileInfo(); //D:\repos\VS2013\Projects\ConvertService\ConvertService\WRecors\cabehok@inbox.ru\76e0ca8f36f524b2e8db91a7dac8ee2c\video
-            try
-            {
-                string filePath = System.Web.HttpContext.Current.Server.MapPath(request.Path);
-                FileInfo fileInfo = new FileInfo(filePath);
+        //public RemoteFileInfo DownloadFile(DownloadRequest request)
+        //{
+        //    RemoteFileInfo result = new RemoteFileInfo(); //D:\repos\VS2013\Projects\ConvertService\ConvertService\WRecors\cabehok@inbox.ru\76e0ca8f36f524b2e8db91a7dac8ee2c\video
+        //    try
+        //    {
+        //        string filePath = System.Web.HttpContext.Current.Server.MapPath(request.Path);
+        //        FileInfo fileInfo = new FileInfo(filePath);
 
-                // check if exists
-                if (!fileInfo.Exists)
-                {
-                    throw new FileNotFoundException("File not found", request.Path);
-                }
+        //        // check if exists
+        //        if (!fileInfo.Exists)
+        //        {
+        //            throw new FileNotFoundException("File not found", request.Path);
+        //        }
 
-                // open stream
-                FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+        //        // open stream
+        //        FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
 
-                OperationContext clientContext = OperationContext.Current;
-                clientContext.OperationCompleted += (o, args) =>
-                {
-                    if (stream != null) stream.Dispose();
-                };
-                // return result 
-                result.Length = fileInfo.Length;
-                result.FileByteStream = stream;
-            }
-            catch (Exception ex)
-            {
+        //        OperationContext clientContext = OperationContext.Current;
+        //        clientContext.OperationCompleted += (o, args) =>
+        //        {
+        //            if (stream != null) stream.Dispose();
+        //        };
+        //        // return result 
+        //        result.Length = fileInfo.Length;
+        //        result.FileByteStream = stream;
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-            }
-            return result;
-        }
+        //    }
+        //    return result;
+        //}
 
-        public ResponseFileInfo ConvertFile(UploadFileInfo request)
+        public void ConvertFile(UploadFileInfo request)
         {
             string hash = "";
             string destDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WRecords");
@@ -100,13 +100,15 @@ namespace ConvertService
                     converter.Dispose();
                     fileInfo.Path = string.Format("WRecords/{0}/{1}/video/{2}", request.Email, hash, Path.GetFileName(outFilePath));
                     fileInfo.Hash = hash;
+
+                    File.WriteAllText(Path.Combine(destDirectory, hash + "__done.txt"), outFilePath);
                 }
             }
             catch (Exception e)
             {
-                File.WriteAllText(Path.Combine(destDirectory, hash + "__catch.txt"), e.StackTrace);
+                File.WriteAllText(Path.Combine(destDirectory, hash + "__catch.txt"), string.Format("Error: {0}\r\n Stack: {1}", e.Message, e.StackTrace));
             }
-            return fileInfo;
+            //return fileInfo;
         }
         #endregion
     }
